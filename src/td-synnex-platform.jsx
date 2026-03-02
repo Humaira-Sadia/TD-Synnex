@@ -160,142 +160,6 @@ const CollapseSection = ({ title, children, defaultOpen = true }) => {
   );
 };
 
-// ── Screen 1: Sign In ─────────────────────────────────────────────────────────
-const SignIn = ({ onLogin }) => {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [err, setErr] = useState("");
-
-  const handle = () => {
-    if (!email || !pass) { setErr("Please enter your email and password."); return; }
-    onLogin(email.split("@")[0] || "Sarah");
-  };
-
-  return (
-    <div style={{ minHeight: "100vh", background: "white", display: "flex", flexDirection: "column" }}>
-      <style>{`
-        .signin-input { width:100%; padding:11px 14px; border:1.5px solid var(--border); borderRadius:9px; fontFamily:var(--font-body); fontSize:14; color:var(--navy); outline:none; transition:border-color .2s; background:white; }
-        .signin-input:focus { border-color:var(--blue); box-shadow:0 0 0 3px rgba(30,86,200,.1); }
-        .signin-btn { width:100%; padding:12px; background:var(--navy); color:white; border:none; borderRadius:9px; fontFamily:var(--font-head); fontWeight:600; fontSize:15; cursor:pointer; transition:background .2s; }
-        .signin-btn:hover { background:var(--navy-mid); }
-      `}</style>
-
-      {/* Top nav */}
-      <div style={{ padding: "20px 40px", borderBottom: "1px solid var(--border)" }}>
-        <TDLogo />
-      </div>
-
-      {/* Background pattern */}
-      <div style={{ position: "fixed", inset: 0, zIndex: 0, overflow: "hidden", pointerEvents: "none" }}>
-        {[...Array(8)].map((_, i) => (
-          <div key={i} style={{ position: "absolute", width: 300 + i * 80, height: 300 + i * 80, border: "1px solid rgba(30,86,200,0.06)", borderRadius: "50%", top: "50%", left: "50%", transform: `translate(-50%, -50%)` }} />
-        ))}
-      </div>
-
-      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", zIndex: 1 }}>
-        <div className="fade-up" style={{ width: "100%", maxWidth: 420, background: "white", borderRadius: 20, border: "1.5px solid var(--border)", padding: "44px 40px", boxShadow: "0 20px 60px rgba(15,32,68,0.1)" }}>
-          <div style={{ marginBottom: 32, textAlign: "center" }}>
-            <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 26, color: "var(--navy)", marginBottom: 6 }}>Welcome back</div>
-            <div style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--slate-light)" }}>Sign in to your TD Synnex account</div>
-          </div>
-
-          <div style={{ marginBottom: 18 }}>
-            <label style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 600, color: "var(--slate)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>Email ID</label>
-            <input className="signin-input" type="email" placeholder="you@company.com" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && handle()} />
-          </div>
-
-          <div style={{ marginBottom: 8 }}>
-            <label style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 600, color: "var(--slate)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>Password</label>
-            <input className="signin-input" type="password" placeholder="••••••••" value={pass} onChange={e => setPass(e.target.value)} onKeyDown={e => e.key === "Enter" && handle()} />
-          </div>
-
-          <div style={{ textAlign: "right", marginBottom: 24 }}>
-            <a href="#" style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--blue)", textDecoration: "none" }}>Forgot password?</a>
-          </div>
-
-          {err && <div style={{ marginBottom: 16, padding: "10px 14px", background: "var(--red-pale)", borderRadius: 8, fontSize: 13, color: "var(--red)", fontFamily: "var(--font-body)" }}>{err}</div>}
-
-          <button className="signin-btn" onClick={handle}>Sign In →</button>
-
-          <div style={{ marginTop: 28, padding: "16px", background: "var(--blue-pale2)", borderRadius: 10, textAlign: "center" }}>
-            <div style={{ fontSize: 12, color: "var(--slate-light)", fontFamily: "var(--font-body)" }}>Enterprise SSO available</div>
-            <a href="#" style={{ fontSize: 13, color: "var(--blue)", fontFamily: "var(--font-body)", fontWeight: 500 }}>Sign in with your organization →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ── Screen 2: Get Started ─────────────────────────────────────────────────────
-const GetStarted = ({ user, onSelect, onBack }) => {
-  const [hovered, setHovered] = useState(null);
-
-  const cards = [
-    {
-      key: "netnew",
-      icon: "🔭",
-      title: "Find Net New Accounts",
-      subtitle: "Prospect Discovery",
-      desc: "Check intent insights to prioritize buyers ready to engage.",
-      color: "var(--blue)",
-      bg: "var(--blue-pale2)",
-      stats: ["142 high-intent prospects today", "Finance & Manufacturing trending", "PAM intent up 62% this week"],
-    },
-    {
-      key: "expand",
-      icon: "📈",
-      title: "Expand Existing Customers",
-      subtitle: "Account Expansion",
-      desc: "Reveal untapped potential across your installed base and act on the strongest growth signals.",
-      color: "var(--green)",
-      bg: "var(--green-pale)",
-      stats: ["23 accounts renewing in 60 days", "42 upsell opportunities identified", "API Connect top play this quarter"],
-    },
-  ];
-
-  return (
-    <div style={{ minHeight: "100vh", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
-      {/* Nav */}
-      <div style={{ padding: "16px 40px", background: "white", borderBottom: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <TDLogo />
-        <div style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--slate)" }}>Welcome, <strong>{user}</strong></div>
-      </div>
-
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px" }}>
-        <div style={{ marginBottom: 8 }}><BackButton onClick={onBack} /></div>
-
-        <div className="fade-up" style={{ textAlign: "center", marginBottom: 48, marginTop: 24 }}>
-          <div style={{ fontFamily: "var(--font-head)", fontWeight: 800, fontSize: 32, color: "var(--navy)", marginBottom: 10 }}>What would you like to do today?</div>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "var(--slate-light)", maxWidth: 480 }}>Select your objective. We will bring the right insights to help you move faster.</div>
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, maxWidth: 820, width: "100%" }}>
-          {cards.map((c, i) => (
-            <div key={c.key} className={i === 0 ? "fade-up-d1" : "fade-up-d2"}
-              onClick={() => onSelect(c.key)}
-              onMouseEnter={() => setHovered(c.key)}
-              onMouseLeave={() => setHovered(null)}
-              style={{ background: "white", borderRadius: 18, border: `2px solid ${hovered === c.key ? c.color : "var(--border)"}`, padding: "36px 32px", cursor: "pointer", transition: "all .25s", transform: hovered === c.key ? "translateY(-4px)" : "none", boxShadow: hovered === c.key ? `0 20px 50px rgba(0,0,0,0.1)` : "0 2px 12px rgba(0,0,0,0.04)" }}>
-
-              <div style={{ width: 56, height: 56, background: c.bg, borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, marginBottom: 20 }}>{c.icon}</div>
-
-              <div style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 600, color: c.color, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>{c.subtitle}</div>
-              <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 20, color: "var(--navy)", marginBottom: 12 }}>{c.title}</div>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--slate)", lineHeight: 1.6, marginBottom: 24 }}>{c.desc}</div>
-
-              <div style={{ marginTop: 8, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontFamily: "var(--font-head)", fontSize: 14, fontWeight: 600, color: c.color }}>Get Started</span>
-                <span style={{ fontSize: 18, color: c.color }}>→</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // ── Screen 3: Main Dashboard ──────────────────────────────────────────────────
 const Dashboard = ({ mode, user, onBack }) => {
   const isNetNew = mode === "netnew";
@@ -643,19 +507,16 @@ const Dashboard = ({ mode, user, onBack }) => {
 
 // ── App Shell ─────────────────────────────────────────────────────────────────
 export default function App() {
-  const [screen, setScreen] = useState("signin"); // signin | getstarted | dashboard
-  const [user, setUser] = useState("");
-  const [mode, setMode] = useState(null); // netnew | expand
-
-  const handleLogin = (name) => { setUser(name); setScreen("getstarted"); };
-  const handleSelect = (m) => { setMode(m); setScreen("dashboard"); };
+  // const [screen, setScreen] = useState("signin"); // signin | getstarted | dashboard
+ 
 
   return (
     <>
       <FontLink />
-      {screen === "signin" && <SignIn onLogin={handleLogin} />}
-      {screen === "getstarted" && <GetStarted user={user} onSelect={handleSelect} onBack={() => setScreen("signin")} />}
-      {screen === "dashboard" && <Dashboard mode={mode} user={user} onBack={() => setScreen("getstarted")} />}
+      {/* {screen === "signin" && <SignIn onLogin={handleLogin} />}
+      {screen === "getstarted" && <GetStarted user={user} onSelect={handleSelect} onBack={() => setScreen("signin")} />} */}
+      {/* {screen === "dashboard" && <Dashboard mode={mode} user={user} onBack={() => setScreen("getstarted")} />} */}
+      <Dashboard mode="netnew" user="John Doe" />
     </>
   );
 }
