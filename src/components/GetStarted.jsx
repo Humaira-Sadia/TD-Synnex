@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BackButton, TDLogo } from '../utils/reuasable.js';
 
 // ── Screen 2: Get Started ─────────────────────────────────────────────────────
 export const GetStarted = ({ user, onSelect, onBack }) => {
-    
+
     const [hovered, setHovered] = useState(null);
+    useEffect(() => {
+        const chatbotDiv = document.getElementById("floatingChatBotDiv");
+        if (chatbotDiv) chatbotDiv.style.display = "none";
+
+        // Show it again if needed when component unmounts
+        return () => {
+            if (chatbotDiv) chatbotDiv.style.display = "block";
+        };
+    }, []);
 
     const cards = [
         {
