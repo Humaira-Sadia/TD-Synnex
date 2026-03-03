@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import { TDLogo } from '../utils/reuasable.js';
 
 // ── Screen 1: Sign In ─────────────────────────────────────────────────────────
