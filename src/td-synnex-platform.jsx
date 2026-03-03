@@ -105,6 +105,17 @@ const Dashboard = ({ mode, user, onBack }) => {
   const [botTyping, setBotTyping] = useState(false);
   const chatEndRef = useRef(null);
 
+  useEffect(() => {
+    const chatbotDiv = document.getElementById("floatingChatBotDiv");
+    console.log("Chatbot Div", chatbotDiv);
+    if (chatbotDiv) chatbotDiv.style.display = "none";
+
+    // Show it again if needed when component unmounts
+    return () => {
+      if (chatbotDiv) chatbotDiv.style.display = "block";
+    };
+  }, []);
+
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [chatMsgs, botTyping]);
 
   const toggleFilter = (key, val) => {

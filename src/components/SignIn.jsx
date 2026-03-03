@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TDLogo } from '../utils/reuasable.js';
 
 // ── Screen 1: Sign In ─────────────────────────────────────────────────────────
@@ -6,6 +6,17 @@ export const SignIn = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [err, setErr] = useState("");
+
+  useEffect(() => {
+    const chatbotDiv = document.getElementById("floatingChatBotDiv");
+    console.log("Chatbot Div", chatbotDiv);
+    if (chatbotDiv) chatbotDiv.style.display = "none";
+
+    // Show it again if needed when component unmounts
+    return () => {
+      if (chatbotDiv) chatbotDiv.style.display = "block";
+    };
+  }, []);
 
   const handle = () => {
     if (!email || !pass) { setErr("Please enter your email and password."); return; }

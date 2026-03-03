@@ -7,6 +7,7 @@ export const GetStarted = ({ user, onSelect, onBack }) => {
     const [hovered, setHovered] = useState(null);
     useEffect(() => {
         const chatbotDiv = document.getElementById("floatingChatBotDiv");
+        console.log("Chatbot Div", chatbotDiv);
         if (chatbotDiv) chatbotDiv.style.display = "none";
 
         // Show it again if needed when component unmounts
